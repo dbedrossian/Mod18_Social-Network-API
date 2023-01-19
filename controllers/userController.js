@@ -31,10 +31,10 @@ module.exports = {
       { $addToSet: { responses: req.body } },
       { runValidators: true, new: true }
     )
-      .then((user) =>
-        !user
+      .then((User) =>
+        !User
           ? res.status(404).json({ message: 'No user with this id!' })
-          : res.json(user)
+          : res.json(User)
       )
       .catch((err) => res.status(500).json(err));
   },
