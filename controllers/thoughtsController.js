@@ -28,7 +28,7 @@ module.exports = {
   updateThought(req, res) {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
-      { $addToSet: { responses: req.body } },
+      { $set: req.body },
       { runValidators: true, new: true }
     )
       .then((Thought) =>
@@ -41,12 +41,7 @@ module.exports = {
 
   deleteThought(req, res) {
     Thought.findOneAndDelete({ _id: req.params.thoughtId })
-      .then((Thought) =>
-        !Thought
-          ? res.status(404).json({ message: 'No thought with that ID' })
-          : Application.deleteMany({ _id: { $in: Thought.applications } })
-      )
-      .then(() => res.json({ message: 'User and associated thoughts deleted!' }))
+      .then(() => res.json({ message: 'Thought deleted!' }))
       .catch((err) => res.status(500).json(err));
   },
 
