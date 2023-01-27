@@ -42,12 +42,7 @@ module.exports = {
   deleteUser(req, res) {
     User.findOneAndDelete({ _id: req.params.userId })
     .then(() => res.json({ message: 'User and associated apps deleted!' }))  
-    .then((user) =>
-        !user
-          ? res.status(404).json({ message: 'No user with that ID' })
-          : Application.deleteMany({ _id: { $in: user.applications } })
-      )
-      .catch((err) => res.status(500).json(err));
+    .catch((err) => res.status(500).json(err));
   },
 
   addFriend(req, res) {
